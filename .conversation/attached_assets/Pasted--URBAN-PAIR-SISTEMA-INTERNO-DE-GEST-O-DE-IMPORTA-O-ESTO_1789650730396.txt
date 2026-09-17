@@ -1,0 +1,3149 @@
+# URBAN PAIR — SISTEMA INTERNO DE GESTÃO DE IMPORTAÇÃO, ESTOQUE, VENDAS E LUCRO
+
+Quero que você desenvolva um sistema web completo, profissional, moderno e funcional chamado **Urban Pair**.
+
+O sistema será uma plataforma **privada e interna**, utilizada somente por mim e pelos meus parceiros, para administrar toda a operação da Urban Pair: produtos, fornecedores, compras na China, pedidos, importações, logística, rastreamento, estoque, vendas, custos, câmbio, lucro e análises financeiras.
+
+Não quero apenas uma interface visual/mockup. Quero um sistema realmente funcional, com banco de dados persistente, CRUDs reais, cálculos reais, autenticação, integrações reais quando tecnicamente possíveis e tratamento de erros.
+
+---
+
+# 1. OBJETIVO PRINCIPAL
+
+O sistema deve centralizar toda a operação da Urban Pair em um único lugar.
+
+Fluxo principal:
+
+**Fornecedor → Catálogo → Produto → Pedido → Compra na China → CSSBuy → Armazém → QC → Consolidação → Envio internacional → Rastreamento → Brasil/EUA → Estoque → Venda → Receita → Lucro**
+
+O sistema deve permitir acompanhar cada produto desde a pesquisa/compra até a venda.
+
+---
+
+# 2. STACK E ARQUITETURA
+
+Use uma arquitetura moderna, simples, escalável e preferencialmente gratuita.
+
+### Frontend
+
+* React
+* TypeScript
+* Tailwind CSS
+* Componentes modernos e reutilizáveis
+* Interface responsiva
+* Desktop-first, mas totalmente utilizável em celular
+* Dark mode
+* Sidebar de navegação
+* Modais, drawers, tabelas, cards, filtros e gráficos
+
+### Backend
+
+Use uma arquitetura backend adequada ao ambiente do Replit.
+
+Pode utilizar:
+
+* Node.js
+* TypeScript
+* API REST ou arquitetura equivalente
+
+### Banco de dados
+
+Utilize:
+
+* PostgreSQL
+
+ORM:
+
+* Prisma ou Drizzle
+
+Escolha uma opção consistente e implemente corretamente.
+
+O banco precisa ser persistente.
+
+Não utilize localStorage como banco principal.
+
+### Autenticação
+
+Sistema de autenticação privado.
+
+Funções:
+
+* Login
+* Logout
+* Sessão persistente
+* Controle de acesso
+
+Papéis:
+
+* Owner
+* Admin
+* Member
+
+O Owner deve possuir controle completo.
+
+---
+
+# 3. REGRA FUNDAMENTAL: NÃO INVENTAR INTEGRAÇÕES
+
+Não crie integrações falsas.
+
+Se uma API não estiver disponível, não finja que existe.
+
+Especialmente:
+
+## CSSBuy
+
+A Urban Pair utiliza CSSBuy para comprar e enviar produtos.
+
+Porém, **não existe uma API key/API access disponível para este projeto**.
+
+Portanto:
+
+* NÃO criar uma falsa API CSSBuy
+* NÃO fingir que existe integração oficial
+* NÃO colocar uma API fictícia
+* NÃO criar endpoints inexistentes
+* NÃO pedir ao usuário para colocar uma API CSSBuy que não existe
+
+As informações da CSSBuy devem ser inseridas manualmente.
+
+Criar campos para:
+
+* CSSBuy Order ID
+* CSSBuy Parcel ID
+* Warehouse
+* Shipping Method
+* Shipping Cost
+* Weight
+* Dimensions
+* Tracking Number
+* Carrier
+* Shipment Date
+* ETA
+* Status
+* Notes
+
+A arquitetura deve ser preparada para uma futura integração caso a CSSBuy disponibilize uma API oficialmente.
+
+---
+
+# 4. ESTRUTURA PRINCIPAL DO SISTEMA
+
+Criar uma sidebar com:
+
+1. Dashboard
+2. Products
+3. Suppliers
+4. Orders
+5. Imports
+6. Logistics
+7. Tracking
+8. Inventory
+9. Sales
+10. Financial
+11. Profit Calculator
+12. Currency
+13. Analytics
+14. Alerts
+15. Settings
+
+A navegação deve ser rápida e intuitiva.
+
+---
+
+# 5. DASHBOARD
+
+Criar um dashboard completo e profissional.
+
+Mostrar cards com:
+
+* Total Invested
+* Inventory Value
+* Inventory Cost
+* In Transit
+* Potential Revenue
+* Potential Profit
+* Current Revenue
+* Realized Profit
+* Logistics Cost
+* Low Stock
+* Active Shipments
+* Products
+* Suppliers
+* Orders
+
+Criar gráficos:
+
+### Receita x Custo x Lucro
+
+Mostrar evolução ao longo do tempo.
+
+### Despesas
+
+Dividir entre:
+
+* Produtos
+* Frete doméstico China
+* CSSBuy
+* Frete internacional
+* Seguro
+* Impostos
+* Embalagem
+* Outros
+
+### Estoque por categoria
+
+### Lucro por produto
+
+### Vendas por categoria
+
+### Linha do tempo de investimentos
+
+Adicionar filtros de período:
+
+* Hoje
+* 7 dias
+* 30 dias
+* 3 meses
+* 6 meses
+* 1 ano
+* Custom
+
+Todos os números devem vir do banco de dados.
+
+Não utilizar números fictícios.
+
+---
+
+# 6. PRODUTOS
+
+Esta é uma das partes mais importantes do sistema.
+
+Criar uma página completa de produtos.
+
+Tabela com:
+
+* Imagem
+* Produto
+* SKU
+* Categoria
+* Fornecedor
+* Plataforma
+* Preço CNY
+* Custo BRL
+* Peso
+* Estoque
+* Em trânsito
+* Preço de venda
+* Margem
+* Lucro
+* Status
+
+Funcionalidades:
+
+* Search
+* Filter
+* Sort
+* Pagination
+* Grid view
+* Table view
+* Criar produto
+* Editar produto
+* Excluir produto
+* Duplicar produto
+* Importar produto
+* Exportar CSV
+* Visualizar detalhes
+
+---
+
+# 7. IMPORTAÇÃO AUTOMÁTICA DE PRODUTOS POR LINK
+
+Quero que o cadastro de produtos seja extremamente rápido.
+
+O usuário deve poder simplesmente colar um link de uma plataforma chinesa.
+
+Exemplos:
+
+* Goofish
+* 闲鱼
+* Xianyu
+* Taobao
+* Tmall
+* 1688
+* Weidian
+* outras plataformas chinesas compatíveis
+
+Exemplo:
+
+```text
+https://...
+```
+
+Depois de colar o link, o sistema deve:
+
+1. Detectar automaticamente a plataforma.
+2. Identificar o produto.
+3. Tentar buscar automaticamente todas as informações públicas disponíveis.
+4. Preencher o formulário.
+5. Mostrar uma tela de revisão antes de salvar.
+
+Criar um serviço abstrato:
+
+```text
+ProductSourceService
+```
+
+Com providers:
+
+```text
+TaobaoProvider
+XianyuProvider
+GoofishProvider
+1688Provider
+WeidianProvider
+GenericChinaMarketplaceProvider
+```
+
+---
+
+# 8. DADOS A SEREM EXTRAÍDOS DOS LINKS
+
+Sempre que tecnicamente possível, tentar obter:
+
+* Nome do produto
+* Título
+* Imagem principal
+* Imagens adicionais
+* Preço
+* Moeda
+* Nome do vendedor
+* Loja
+* Supplier
+* SKU
+* Product ID
+* URL
+* Plataforma
+* Descrição
+* Cor
+* Tamanho
+* Variantes
+* MOQ
+* Peso
+* Categoria
+* Subcategoria
+
+Se alguma informação não estiver disponível, não inventar.
+
+Mostrar claramente:
+
+```text
+Not available
+```
+
+ou deixar o campo para preenchimento manual.
+
+O usuário deve poder editar tudo antes de salvar.
+
+---
+
+# 9. HIERARQUIA DE OBTENÇÃO DOS DADOS
+
+Ao importar um produto, utilizar esta ordem quando disponível:
+
+1. API oficial
+2. Endpoint público permitido
+3. OpenGraph/meta tags
+4. HTML público acessível
+5. Outros métodos legítimos
+
+Não tentar:
+
+* Bypass de login
+* Bypass de CAPTCHA
+* Bypass de anti-bot
+* Bypass de paywall
+* Acesso a dados privados
+* Roubo de cookies
+* Roubo de tokens
+* Armazenamento de credenciais de terceiros
+
+Se uma plataforma bloquear o acesso automático, informar o usuário e permitir preenchimento manual.
+
+A interface deve continuar funcionando mesmo quando a importação automática falhar.
+
+---
+
+# 10. PRODUCT SOURCE
+
+Criar uma entidade:
+
+```text
+ProductSource
+```
+
+Campos:
+
+* id
+* productId
+* platform
+* sourceUrl
+* externalProductId
+* importedAt
+* lastCheckedAt
+* importStatus
+* rawMetadata, quando permitido
+* errorMessage
+
+Isso permitirá saber de onde veio cada produto.
+
+---
+
+# 11. CADASTRO MANUAL DE PRODUTOS
+
+Mesmo com importação automática, permitir cadastro manual.
+
+Campos:
+
+* Name
+* SKU
+* Image
+* Category
+* Subcategory
+* Supplier
+* Source URL
+* Platform
+* CNY Purchase Price
+* Domestic China Shipping
+* Weight
+* Dimensions
+* Quantity
+* Selling Price BRL
+* Minimum Stock
+* Description
+* Notes
+
+---
+
+# 12. VARIANTES
+
+Produtos devem permitir variantes.
+
+Exemplo:
+
+Produto:
+
+```text
+Nike Hoodie
+```
+
+Variantes:
+
+```text
+Black / M
+Black / L
+Black / XL
+Gray / M
+Gray / L
+```
+
+Cada variante pode ter:
+
+* Color
+* Size
+* SKU
+* Quantity
+* Weight
+* Purchase Price
+* Selling Price
+* Stock
+
+---
+
+# 13. CATEGORIAS
+
+Criar sistema completo de categorias.
+
+Exemplos:
+
+* T-Shirts
+* Hoodies
+* Pants
+* Shorts
+* Jackets
+* Shoes
+* Accessories
+* Bags
+* Other
+
+Permitir:
+
+* Criar
+* Editar
+* Excluir
+* Subcategorias
+
+---
+
+# 14. FORNECEDORES
+
+Criar página completa de fornecedores.
+
+Campos:
+
+* Supplier Name
+* Contact
+* Platform
+* Username
+* URL
+* Yupoo Catalog URL
+* Notes
+* Rating interno
+* Status
+
+Não criar ranking automático de fornecedores.
+
+Permitir visualizar:
+
+* Produtos do fornecedor
+* Pedidos
+* Compras
+* Valor total comprado
+* Catálogos
+* Histórico
+
+---
+
+# 15. CATÁLOGOS YUPOO
+
+Cada fornecedor poderá possuir um catálogo Yupoo.
+
+O usuário fornecerá o link do catálogo.
+
+Exemplo:
+
+```text
+https://...
+```
+
+Quero que o conteúdo do catálogo apareça **dentro do Urban Pair**, sem que eu precise sair do site sempre que possível.
+
+Criar:
+
+```text
+SupplierCatalog
+```
+
+Campos:
+
+* id
+* supplierId
+* name
+* platform
+* catalogUrl
+* status
+* lastSyncedAt
+* notes
+
+Criar:
+
+```text
+YupooProvider
+```
+
+e:
+
+```text
+CatalogService
+```
+
+---
+
+# 16. VISUALIZADOR YUPOO DENTRO DO SITE
+
+Na página do fornecedor, mostrar:
+
+## Supplier Catalog
+
+Com:
+
+* URL
+* Status
+* Last Sync
+* Open Catalog
+* Refresh
+* Import Product
+
+Quando tecnicamente permitido, exibir o catálogo dentro do Urban Pair utilizando:
+
+* iframe/embed
+* API
+* página pública
+* conteúdo público acessível
+
+Se o Yupoo bloquear iframe/embed, **não tentar burlar o bloqueio**.
+
+Nesse caso:
+
+* Mostrar mensagem clara
+* Criar botão "Open Catalog in New Tab"
+* Exibir conteúdo público que possa ser obtido legitimamente
+* Manter a opção de importar produtos manualmente por URL
+
+---
+
+# 17. IMPORTAR PRODUTOS DO YUPOO
+
+Quando possível, permitir:
+
+```text
+Import Product From Catalog
+```
+
+Ao clicar:
+
+1. Identificar produto
+2. Buscar informações públicas
+3. Criar prévia
+4. Permitir editar
+5. Salvar em Products
+
+Também permitir copiar o link do produto Yupoo e usar o sistema de importação de produtos.
+
+---
+
+# 18. SEGURANÇA YUPOO
+
+Não armazenar:
+
+* Senhas
+* Cookies
+* Tokens privados
+* Credenciais
+
+Não tentar acessar áreas privadas sem autorização.
+
+---
+
+# 19. ORDERS
+
+Criar página de pedidos.
+
+Campos:
+
+* Order ID
+* Supplier
+* Date
+* Platform
+* CSSBuy Order ID
+* Status
+* Currency
+* Total
+* Notes
+
+Status:
+
+* Draft
+* Ordered
+* Processing
+* Shipped
+* Received
+* Cancelled
+
+Cada pedido deve possuir Order Items.
+
+---
+
+# 20. ORDER ITEMS
+
+Campos:
+
+* Product
+* Variant
+* Quantity
+* Unit Price
+* Domestic Shipping
+* Total
+* Notes
+
+Calcular automaticamente:
+
+```text
+Subtotal
++
+Domestic Shipping
+=
+Order Total
+```
+
+---
+
+# 21. IMPORTS
+
+Criar uma área específica para importações.
+
+Uma importação representa um conjunto de produtos enviados em uma remessa.
+
+Campos:
+
+* Import ID
+* Date
+* Supplier
+* Orders
+* Products
+* Quantity
+* Product Cost
+* Domestic China Shipping
+* CSSBuy Fees
+* International Shipping
+* Insurance
+* Taxes
+* Packaging
+* Other Costs
+* Landed Cost
+* Potential Revenue
+* Potential Profit
+* Status
+* Notes
+
+---
+
+# 22. STATUS DA IMPORTAÇÃO
+
+Criar timeline:
+
+```text
+Research
+↓
+Ordered
+↓
+At Supplier
+↓
+At CSSBuy Warehouse
+↓
+QC
+↓
+Consolidated
+↓
+Preparing Shipment
+↓
+Shipped
+↓
+In Transit
+↓
+Customs
+↓
+Out for Delivery
+↓
+Delivered
+↓
+Added to Inventory
+↓
+Sold
+```
+
+O usuário deve poder atualizar manualmente o status.
+
+---
+
+# 23. CSSBUY
+
+Como não haverá API CSSBuy, criar uma seção manual dentro de cada pedido/importação.
+
+Campos:
+
+* CSSBuy Order ID
+* CSSBuy Parcel ID
+* Warehouse
+* Warehouse Arrival Date
+* QC Status
+* Consolidation Status
+* Shipping Method
+* Shipping Cost
+* Weight
+* Dimensions
+* Tracking Number
+* Carrier
+* Shipment Date
+* Estimated Delivery
+* Notes
+
+Permitir anexar observações e links relacionados.
+
+---
+
+# 24. LOGISTICS
+
+Criar página de logística.
+
+Cada shipment deve possuir:
+
+* Shipment ID
+* Import ID
+* CSSBuy Parcel ID
+* Tracking Number
+* Carrier
+* Shipping Method
+* Origin
+* Destination
+* Weight
+* Dimensions
+* Shipping Cost
+* Insurance
+* Shipment Date
+* ETA
+* Status
+* Last Tracking Update
+* Notes
+
+---
+
+# 25. TRACKING
+
+Criar sistema de rastreamento.
+
+Precisa funcionar para:
+
+* Correios
+* Transportadoras brasileiras
+* Transportadoras internacionais
+* Transportadoras dos EUA
+* Transportadoras chinesas
+
+Sempre que houver uma API gratuita ou free-tier legítima e adequada, utilizar integração real.
+
+Criar arquitetura:
+
+```text
+TrackingService
+```
+
+Com providers específicos quando possível.
+
+Exemplo:
+
+```text
+CorreiosProvider
+InternationalCarrierProvider
+GenericTrackingProvider
+ManualTrackingProvider
+```
+
+---
+
+# 26. TRACKING FALLBACK
+
+É obrigatório possuir fallback manual.
+
+Se a API não conseguir encontrar o rastreamento:
+
+Permitir adicionar manualmente:
+
+* Status
+* Date
+* Location
+* Description
+
+Criar timeline:
+
+```text
+Shipment Created
+↓
+Accepted
+↓
+In Transit
+↓
+Arrived at Facility
+↓
+Customs
+↓
+Out for Delivery
+↓
+Delivered
+```
+
+Os eventos devem ser persistidos.
+
+Não inventar eventos.
+
+---
+
+# 27. TRACKING CACHE
+
+Para evitar excesso de requests:
+
+* Cache
+* Rate limiting
+* Atualização periódica
+* Last checked timestamp
+
+Mostrar:
+
+```text
+Last checked: ...
+```
+
+Permitir:
+
+```text
+Refresh Tracking
+```
+
+---
+
+# 28. INVENTORY
+
+Criar sistema completo de estoque.
+
+Cada produto/variante deve possuir:
+
+* Current Stock
+* Reserved Stock
+* Available Stock
+* In Transit
+* Sold
+* Minimum Stock
+
+Fórmula:
+
+```text
+Available Stock =
+Current Stock - Reserved Stock
+```
+
+Criar movimentações:
+
+* Purchase
+* Import
+* Shipment Received
+* Sale
+* Adjustment
+* Return
+* Damage
+* Loss
+
+---
+
+# 29. INVENTORY MOVEMENTS
+
+Criar histórico:
+
+* Date
+* Product
+* Variant
+* Type
+* Quantity
+* Previous Stock
+* New Stock
+* Reference
+* User
+* Notes
+
+---
+
+# 30. SALES
+
+Criar sistema de vendas.
+
+Campos:
+
+* Sale ID
+* Date
+* Customer, opcional
+* Product
+* Variant
+* Quantity
+* Selling Price
+* Discount
+* Payment Method
+* Total
+* Notes
+
+Calcular automaticamente:
+
+```text
+Revenue
+-
+Product Cost
+-
+Allocated Logistics Cost
+-
+Other Costs
+=
+Realized Profit
+```
+
+---
+
+# 31. FINANCIAL
+
+Criar dashboard financeiro.
+
+Mostrar:
+
+* Revenue
+* Costs
+* Expenses
+* Gross Profit
+* Realized Profit
+* Inventory Investment
+* Logistics Cost
+* Taxes
+* Other Expenses
+* Cash Flow
+
+Permitir registrar despesas.
+
+Categorias:
+
+* Product Purchase
+* Shipping
+* CSSBuy Fees
+* Taxes
+* Packaging
+* Marketing
+* Platform Fees
+* Other
+
+---
+
+# 32. CURRENCY
+
+Suportar:
+
+* CNY / Yuan
+* BRL / Real
+* USD / Dollar
+
+Criar integração com API gratuita ou free-tier para taxas atuais quando disponível.
+
+Mostrar:
+
+* Current Rate
+* Historical Rate
+* Last Update
+
+---
+
+# 33. HISTORICAL CURRENCY
+
+Muito importante:
+
+Quando uma compra for registrada, salvar a taxa de câmbio utilizada naquele momento.
+
+Exemplo:
+
+```text
+Purchase:
+CNY 500
+
+Rate at purchase:
+1 CNY = R$ 0.72
+
+Historical Cost:
+R$ 360
+```
+
+Se o câmbio mudar amanhã, o custo histórico da compra **não pode mudar**.
+
+O sistema pode mostrar:
+
+```text
+Historical Cost
+Current Equivalent
+```
+
+separadamente.
+
+---
+
+# 34. LANDED COST CALCULATOR
+
+Criar calculadora completa.
+
+Inputs:
+
+* Product Cost
+* Quantity
+* Domestic Shipping
+* CSSBuy Fees
+* International Shipping
+* Insurance
+* Taxes
+* Packaging
+* Other Costs
+
+Output:
+
+```text
+Total Product Cost
+Total Logistics Cost
+Total Investment
+Landed Cost
+Unit Landed Cost
+```
+
+Fórmula:
+
+```text
+Total Investment =
+Product Cost
++ Domestic Shipping
++ CSSBuy Fees
++ International Shipping
++ Insurance
++ Taxes
++ Packaging
++ Other Costs
+```
+
+---
+
+# 35. PROFIT CALCULATOR
+
+Criar calculadora de lucro.
+
+Inputs:
+
+* Unit Cost
+* Quantity
+* Selling Price
+* Additional Costs
+
+Outputs:
+
+* Total Cost
+* Unit Cost
+* Revenue
+* Gross Profit
+* Profit per Unit
+* Margin %
+* ROI %
+
+Fórmulas:
+
+```text
+Revenue =
+Selling Price × Quantity
+```
+
+```text
+Profit =
+Revenue - Total Cost
+```
+
+```text
+Margin % =
+Profit / Revenue × 100
+```
+
+```text
+ROI % =
+Profit / Total Cost × 100
+```
+
+---
+
+# 36. TARGET MARGIN
+
+Permitir definir uma margem desejada.
+
+Exemplo:
+
+```text
+Target Margin: 40%
+```
+
+Calcular:
+
+```text
+Recommended Selling Price
+```
+
+Também criar:
+
+* Break-even Price
+* Break-even Quantity
+* Scenario Simulator
+
+---
+
+# 37. SCENARIO SIMULATOR
+
+Permitir testar diferentes cenários.
+
+Exemplo:
+
+```text
+Purchase Cost
+Shipping Cost
+Selling Price
+Quantity
+Exchange Rate
+```
+
+Mostrar como isso altera:
+
+* Investment
+* Revenue
+* Profit
+* Margin
+* ROI
+
+---
+
+# 38. LOGISTICS COST ALLOCATION
+
+Permitir distribuir o custo de logística entre produtos.
+
+Métodos:
+
+* By Weight
+* By Quantity
+* By Product Value
+* Manual
+
+Exemplo:
+
+Se o frete total for:
+
+```text
+$200
+```
+
+e existirem vários produtos, o sistema poderá distribuir o custo proporcionalmente.
+
+Salvar o método utilizado.
+
+---
+
+# 39. PACKAGE CONTENTS
+
+Cada shipment deve permitir visualizar:
+
+* Products
+* Variants
+* Quantities
+* Weight
+* Value
+* Assigned Logistics Cost
+
+---
+
+# 40. IMPORT WIZARD
+
+Criar um wizard para facilitar novas importações.
+
+Etapas:
+
+### Step 1
+
+Select Supplier
+
+### Step 2
+
+Select Products
+
+### Step 3
+
+Review Quantities
+
+### Step 4
+
+Purchase Costs
+
+### Step 5
+
+Domestic Shipping
+
+### Step 6
+
+CSSBuy Information
+
+### Step 7
+
+Shipment
+
+### Step 8
+
+Tracking
+
+### Step 9
+
+Review Total Investment
+
+### Step 10
+
+Confirm Import
+
+---
+
+# 41. ALERTS
+
+Criar sistema de alertas.
+
+Exemplos:
+
+* Low Stock
+* Shipment Delayed
+* Tracking Not Updated
+* Import Delivered
+* Missing Product Data
+* Missing Tracking
+* Missing Supplier
+* High Logistics Cost
+* Unusually Low Margin
+
+Permitir marcar como:
+
+* Read
+* Unread
+* Dismissed
+
+---
+
+# 42. LOW STOCK
+
+Quando:
+
+```text
+Current Stock <= Minimum Stock
+```
+
+criar alerta.
+
+Mostrar na dashboard.
+
+---
+
+# 43. GLOBAL SEARCH
+
+Criar busca global.
+
+Pesquisar por:
+
+* Product
+* SKU
+* Supplier
+* Order
+* Import
+* Shipment
+* Tracking Number
+* Sale
+
+---
+
+# 44. ANALYTICS
+
+Criar página de Analytics.
+
+Métricas:
+
+* Revenue over time
+* Profit over time
+* Cost over time
+* Average Margin
+* ROI
+* Best-selling products
+* Inventory turnover
+* Sales by category
+* Sales by supplier
+* Logistics cost
+* Average product cost
+* Average selling price
+
+Permitir filtros por:
+
+* Date
+* Category
+* Supplier
+* Product
+* Import
+
+---
+
+# 45. PRODUTOS MAIS RENTÁVEIS
+
+Criar análise por produto mostrando:
+
+* Revenue
+* Cost
+* Profit
+* Margin
+* ROI
+* Quantity Sold
+
+Não utilizar dados fictícios.
+
+---
+
+# 46. SETTINGS
+
+Criar configurações para:
+
+* Business Name
+* Currency
+* Default Country
+* Timezone
+* Theme
+* Notification preferences
+* User management
+* Categories
+* Integrations
+* Tracking settings
+
+---
+
+# 47. EXPORTAÇÃO
+
+Permitir exportar dados em CSV.
+
+Exportações:
+
+* Products
+* Suppliers
+* Orders
+* Imports
+* Shipments
+* Inventory
+* Sales
+* Expenses
+* Analytics
+
+---
+
+# 48. BACKUPS
+
+Criar estrutura preparada para backup dos dados.
+
+Se a plataforma permitir backup automático no free tier, utilizar.
+
+Caso contrário, permitir exportação dos dados.
+
+---
+
+# 49. AUDIT LOG
+
+Criar histórico de alterações.
+
+Registrar:
+
+* User
+* Action
+* Entity
+* Entity ID
+* Timestamp
+* Previous Value, quando apropriado
+* New Value, quando apropriado
+
+Exemplos:
+
+```text
+Product Created
+Product Updated
+Product Deleted
+Sale Created
+Import Updated
+Shipment Updated
+```
+
+---
+
+# 50. DATABASE ENTITIES
+
+Criar pelo menos as seguintes entidades:
+
+```text
+User
+Supplier
+SupplierCatalog
+Category
+Product
+ProductVariant
+ProductSource
+PurchaseOrder
+PurchaseOrderItem
+Import
+Shipment
+TrackingEvent
+Inventory
+InventoryMovement
+Sale
+SaleItem
+Expense
+CurrencyRate
+Alert
+AuditLog
+```
+
+Criar relações corretamente.
+
+---
+
+# 51. PRODUCT RELATIONSHIP
+
+Um Product pode possuir:
+
+* Supplier
+* Category
+* ProductVariants
+* ProductSources
+* PurchaseOrderItems
+* InventoryMovements
+* SaleItems
+
+---
+
+# 52. SUPPLIER RELATIONSHIP
+
+Um Supplier pode possuir:
+
+* Products
+* PurchaseOrders
+* SupplierCatalogs
+
+---
+
+# 53. IMPORT RELATIONSHIP
+
+Uma Import pode possuir:
+
+* Orders
+* Products
+* Shipments
+* Costs
+* Tracking information
+
+---
+
+# 54. DATABASE INTEGRITY
+
+Garantir:
+
+* Foreign keys
+* Validation
+* Unique constraints
+* Indexes
+* Cascade rules apropriadas
+* Timestamps
+* Soft delete quando fizer sentido
+
+Criar índices para campos frequentemente pesquisados:
+
+* SKU
+* Product Name
+* Supplier
+* Tracking Number
+* Order ID
+* Import ID
+* External Product ID
+
+---
+
+# 55. DESIGN
+
+O design deve parecer um software SaaS profissional.
+
+Nome:
+
+# Urban Pair
+
+Cor principal:
+
+**Navy Blue**
+
+Utilizar navy blue como cor principal da identidade visual.
+
+Visual:
+
+* Moderno
+* Minimalista
+* Premium
+* Profissional
+* Clean
+* Boa hierarquia visual
+* Espaçamento consistente
+* Cards modernos
+* Tabelas organizadas
+* Ícones discretos
+* Microinterações
+* Loading states
+* Empty states
+* Error states
+* Success states
+
+Não exagerar em animações.
+
+---
+
+# 56. RESPONSIVIDADE
+
+O sistema deve funcionar em:
+
+* Desktop
+* Laptop
+* Tablet
+* Mobile
+
+No mobile, adaptar tabelas para cards ou permitir scroll horizontal quando necessário.
+
+---
+
+# 57. DARK MODE
+
+Implementar dark mode de verdade.
+
+Não apenas trocar background.
+
+Todos os componentes precisam funcionar corretamente nos dois temas.
+
+---
+
+# 58. UX
+
+Priorizar velocidade de uso.
+
+Especialmente:
+
+* Adicionar produto
+* Importar produto por URL
+* Criar pedido
+* Criar importação
+* Adicionar shipment
+* Registrar venda
+* Atualizar estoque
+
+Evitar formulários excessivamente complicados.
+
+Utilizar:
+
+* Autocomplete
+* Dropdowns
+* Date pickers
+* Numeric inputs
+* URL validation
+* Inline editing quando fizer sentido
+
+---
+
+# 59. PRODUCT QUICK ADD
+
+Criar um fluxo rápido:
+
+```text
++ Add Product
+```
+
+Primeiro campo:
+
+```text
+Paste Product URL
+```
+
+Depois:
+
+```text
+Detect Platform
+↓
+Fetch Public Information
+↓
+Preview
+↓
+Edit
+↓
+Save Product
+```
+
+Se a importação falhar:
+
+```text
+Automatic import unavailable.
+Enter product information manually.
+```
+
+---
+
+# 60. PERFORMANCE
+
+O sistema deve ser rápido.
+
+Implementar:
+
+* Lazy loading
+* Pagination
+* Debounced search
+* Caching
+* Efficient database queries
+* Proper indexes
+* Optimized images
+* Avoid unnecessary API calls
+
+---
+
+# 61. ERROR HANDLING
+
+Toda integração externa deve possuir tratamento de erros.
+
+Exemplos:
+
+```text
+Platform unavailable
+Product not found
+Rate limit exceeded
+Invalid URL
+Tracking unavailable
+Currency API unavailable
+Catalog blocked
+```
+
+Mostrar mensagens úteis ao usuário.
+
+Nunca quebrar a aplicação inteira porque uma API externa falhou.
+
+---
+
+# 62. OFFLINE / FALLBACK
+
+Sempre que possível, permitir funcionamento parcial sem APIs externas.
+
+Exemplos:
+
+Se câmbio falhar:
+
+* permitir inserir taxa manualmente.
+
+Se tracking falhar:
+
+* permitir tracking manual.
+
+Se plataforma chinesa não puder ser acessada:
+
+* permitir cadastro manual.
+
+Se Yupoo não permitir embed:
+
+* abrir catálogo externamente.
+
+---
+
+# 63. SECURITY
+
+Implementar:
+
+* Password hashing
+* Secure sessions
+* Authorization
+* Input validation
+* SQL injection protection
+* XSS protection
+* CSRF protection quando aplicável
+* Rate limiting em endpoints sensíveis
+* Environment variables para secrets
+
+Nunca colocar API keys no frontend.
+
+Nunca colocar secrets diretamente no código.
+
+---
+
+# 64. ENVIRONMENT VARIABLES
+
+Criar:
+
+```text
+.env.example
+```
+
+com placeholders para:
+
+```text
+DATABASE_URL=
+AUTH_SECRET=
+CURRENCY_API_KEY=
+TRACKING_API_KEY=
+```
+
+Somente adicionar variáveis para serviços realmente utilizados.
+
+Não adicionar:
+
+```text
+CSSBUY_API_KEY
+```
+
+porque não haverá integração CSSBuy.
+
+Se uma API for opcional, o sistema deve continuar funcionando sem ela.
+
+---
+
+# 65. FREE-FIRST ARCHITECTURE
+
+Priorizar ferramentas gratuitas.
+
+Sempre que houver uma opção gratuita adequada, utilizar.
+
+Evitar serviços pagos obrigatórios.
+
+Não criar arquitetura que exija pagamento para funcionar em seu núcleo.
+
+A aplicação deve funcionar utilizando os free tiers disponíveis no momento da implementação.
+
+---
+
+# 66. AI-READY ARCHITECTURE
+
+Não é necessário adicionar IA paga agora.
+
+Porém, estruturar o sistema para futuramente permitir funcionalidades como:
+
+* Product categorization
+* Product description generation
+* Supplier analysis
+* Profit analysis
+* Demand forecasting
+* Purchase recommendations
+* Product data cleanup
+
+Não implementar IA falsa.
+
+---
+
+# 67. CÁLCULOS
+
+Todos os cálculos financeiros devem ocorrer no backend ou em uma camada centralizada de cálculo.
+
+Não duplicar fórmulas em vários componentes.
+
+Criar funções reutilizáveis.
+
+Exemplos:
+
+```text
+calculateOrderTotal()
+calculateLandedCost()
+calculateUnitCost()
+calculateRevenue()
+calculateProfit()
+calculateMargin()
+calculateROI()
+calculateBreakEvenPrice()
+allocateLogisticsCost()
+```
+
+Usar precisão adequada para moedas.
+
+Evitar erros de floating point quando possível.
+
+---
+
+# 68. HISTÓRICO FINANCEIRO
+
+Nunca alterar silenciosamente valores históricos.
+
+Quando uma compra for concluída:
+
+* Salvar preço
+* Salvar câmbio
+* Salvar custos
+* Salvar quantidade
+* Salvar custo total
+
+Alterações posteriores não devem modificar o histórico sem registrar uma alteração.
+
+---
+
+# 69. STATUS E TIMELINES
+
+Utilizar badges de status.
+
+Exemplo:
+
+```text
+Ordered
+At Warehouse
+In Transit
+Delivered
+Sold
+```
+
+Criar timelines visuais para:
+
+* Imports
+* Shipments
+* Tracking
+* Orders
+
+---
+
+# 70. NOTIFICAÇÕES
+
+Criar sistema de notificações dentro do site.
+
+Mostrar um ícone de sino no header.
+
+Exemplo:
+
+```text
+3 new alerts
+```
+
+Ao clicar:
+
+* Low stock
+* Shipment update
+* Missing data
+* Import delivered
+
+---
+
+# 71. HEADER
+
+Header contendo:
+
+* Global Search
+* Notifications
+* User Profile
+* Theme Toggle
+
+---
+
+# 72. SIDEBAR
+
+Sidebar com:
+
+* Logo Urban Pair
+* Navigation
+* Collapse button
+* Current section highlight
+
+No mobile, utilizar menu drawer.
+
+---
+
+# 73. EMPTY STATES
+
+Cada página deve possuir um estado vazio profissional.
+
+Exemplo:
+
+```text
+No products yet.
+
+Add your first product by pasting a Chinese marketplace URL.
+```
+
+Com CTA:
+
+```text
++ Add Product
+```
+
+---
+
+# 74. LOADING STATES
+
+Criar:
+
+* Skeleton loaders
+* Button loading
+* Table loading
+* Import progress
+* Tracking refresh progress
+
+Nunca deixar a interface parecer travada.
+
+---
+
+# 75. DOCUMENTAÇÃO
+
+Criar README completo explicando:
+
+* Como executar
+* Como configurar banco
+* Como executar migrations
+* Como configurar environment variables
+* Como iniciar development
+* Como fazer build
+* Como fazer deploy
+* Como funciona a arquitetura
+* Como adicionar novos marketplace providers
+* Como adicionar tracking providers
+* Como adicionar currency providers
+
+---
+
+# 76. PROVIDER ARCHITECTURE
+
+Criar interfaces para integrações externas.
+
+Exemplo:
+
+```text
+ProductSourceProvider
+TrackingProvider
+CurrencyProvider
+CatalogProvider
+```
+
+Isso permitirá adicionar novas plataformas futuramente sem reescrever o sistema inteiro.
+
+---
+
+# 77. MARKETPLACE PROVIDER
+
+Cada marketplace provider deve implementar algo semelhante a:
+
+```text
+canHandle(url)
+fetchProduct(url)
+normalizeProduct(data)
+```
+
+O sistema deve detectar automaticamente qual provider utilizar.
+
+---
+
+# 78. TRACKING PROVIDER
+
+Cada provider deve implementar algo semelhante a:
+
+```text
+canHandle(trackingNumber, carrier)
+track(trackingNumber)
+normalizeEvents(data)
+```
+
+Se nenhum provider funcionar:
+
+```text
+ManualTrackingProvider
+```
+
+---
+
+# 79. CURRENCY PROVIDER
+
+Criar:
+
+```text
+getCurrentRate()
+getHistoricalRate()
+```
+
+Salvar resultados importantes no banco.
+
+---
+
+# 80. NO FAKE DATA
+
+Muito importante:
+
+**NÃO criar dados fictícios para fingir que integrações funcionam.**
+
+Não criar:
+
+* Produtos falsos
+* Pedidos falsos
+* Tracking falso
+* Taxas falsas
+* Fornecedores falsos
+* Vendas falsas
+* Dados de CSSBuy falsos
+
+Durante desenvolvimento, pode utilizar seed apenas se necessário para testar a aplicação, mas deixar isso claramente separado e não apresentar esses dados como dados reais.
+
+Preferencialmente iniciar a aplicação vazia.
+
+---
+
+# 81. REAL CRUD
+
+Todos os principais módulos devem ter CRUD real.
+
+Products:
+
+* Create
+* Read
+* Update
+* Delete
+
+Suppliers:
+
+* Create
+* Read
+* Update
+* Delete
+
+Orders:
+
+* Create
+* Read
+* Update
+* Delete
+
+Imports:
+
+* Create
+* Read
+* Update
+* Delete
+
+Shipments:
+
+* Create
+* Read
+* Update
+* Delete
+
+Sales:
+
+* Create
+* Read
+* Update
+* Delete
+
+Expenses:
+
+* Create
+* Read
+* Update
+* Delete
+
+---
+
+# 82. DATA VALIDATION
+
+Validar:
+
+* Required fields
+* Numeric values
+* Currency
+* URLs
+* Tracking numbers
+* Quantities
+* Prices
+* Dates
+* SKU uniqueness
+
+Mostrar erros próximos aos campos.
+
+---
+
+# 83. CONFIRMATION DIALOGS
+
+Ações destrutivas devem pedir confirmação.
+
+Exemplo:
+
+```text
+Delete Product?
+
+This action cannot be undone.
+```
+
+---
+
+# 84. PRODUCT DETAILS
+
+Ao clicar em um produto, mostrar página detalhada com:
+
+### Overview
+
+* Image
+* Name
+* SKU
+* Category
+* Supplier
+* Platform
+
+### Cost
+
+* Purchase price
+* Historical exchange rate
+* Landed cost
+* Unit cost
+
+### Pricing
+
+* Selling price
+* Margin
+* Profit
+* ROI
+
+### Inventory
+
+* Stock
+* Reserved
+* In Transit
+* Sold
+
+### Variants
+
+Tabela de variantes.
+
+### Source
+
+* Original URL
+* Platform
+* External Product ID
+* Import history
+
+### Orders
+
+Pedidos onde o produto apareceu.
+
+### Sales
+
+Vendas do produto.
+
+### History
+
+Alterações e movimentações.
+
+---
+
+# 85. SUPPLIER DETAILS
+
+Página detalhada do fornecedor.
+
+Mostrar:
+
+* Supplier information
+* Products
+* Orders
+* Total purchased
+* Catalogs
+* Notes
+* Supplier URLs
+
+Se houver Yupoo:
+
+```text
+Catalogs
+```
+
+com o visualizador integrado.
+
+---
+
+# 86. IMPORT DETAILS
+
+Mostrar:
+
+* Import information
+* Products
+* Costs
+* Shipment
+* Tracking
+* Timeline
+* Inventory result
+* Financial summary
+
+Resumo:
+
+```text
+Total Investment
+Potential Revenue
+Potential Profit
+Actual Revenue
+Actual Profit
+```
+
+---
+
+# 87. SHIPMENT DETAILS
+
+Mostrar:
+
+* Shipment ID
+* CSSBuy Parcel ID
+* Tracking
+* Carrier
+* Weight
+* Dimensions
+* Cost
+* Status
+* Tracking Timeline
+* Package Contents
+
+---
+
+# 88. SALES AND INVENTORY INTEGRATION
+
+Quando uma venda for criada:
+
+1. Validar estoque
+2. Reduzir estoque
+3. Criar InventoryMovement
+4. Criar Sale
+5. Calcular custo
+6. Calcular lucro
+7. Atualizar analytics
+8. Criar alerta de estoque se necessário
+
+Tudo deve ocorrer de maneira consistente.
+
+---
+
+# 89. IMPORT AND INVENTORY INTEGRATION
+
+Quando uma importação for marcada como:
+
+```text
+Added to Inventory
+```
+
+o sistema deve:
+
+1. Adicionar quantidade ao estoque
+2. Criar InventoryMovement
+3. Registrar custo histórico
+4. Atualizar inventory value
+5. Atualizar product stock
+6. Registrar audit log
+
+Evitar duplicação caso o usuário clique novamente.
+
+---
+
+# 90. MOBILE PRODUCT ENTRY
+
+No celular, o fluxo de adicionar produto deve ser extremamente simples.
+
+Prioridade:
+
+```text
+Paste URL
+↓
+Import
+↓
+Review
+↓
+Save
+```
+
+---
+
+# 91. SEARCH AND FILTERS
+
+Products:
+
+* Name
+* SKU
+* Supplier
+* Category
+* Platform
+* Stock status
+
+Orders:
+
+* Order ID
+* Supplier
+* Platform
+* Status
+* Date
+
+Imports:
+
+* Import ID
+* Supplier
+* Status
+* Date
+
+Shipments:
+
+* Tracking
+* Carrier
+* Status
+* Import
+
+Sales:
+
+* Product
+* Date
+* Payment method
+
+---
+
+# 92. SORTING
+
+Permitir ordenar:
+
+Products:
+
+* Name
+* Price
+* Cost
+* Stock
+* Profit
+* Margin
+
+Orders:
+
+* Date
+* Total
+* Status
+
+Sales:
+
+* Date
+* Revenue
+* Profit
+
+---
+
+# 93. PAGINATION
+
+Implementar paginação real no backend para grandes quantidades de dados.
+
+Não carregar milhares de registros de uma vez.
+
+---
+
+# 94. API DESIGN
+
+Criar endpoints organizados.
+
+Exemplo:
+
+```text
+/api/products
+/api/products/:id
+/api/suppliers
+/api/suppliers/:id
+/api/orders
+/api/imports
+/api/shipments
+/api/tracking
+/api/inventory
+/api/sales
+/api/expenses
+/api/currency
+/api/analytics
+/api/alerts
+```
+
+Também criar endpoints específicos para importação automática:
+
+```text
+/api/product-sources/preview
+/api/product-sources/import
+```
+
+e catálogo:
+
+```text
+/api/catalogs
+/api/catalogs/:id
+/api/catalogs/:id/preview
+```
+
+---
+
+# 95. API SECURITY
+
+Endpoints devem verificar autenticação.
+
+Não permitir acesso público aos dados da Urban Pair.
+
+Cada request deve verificar autorização quando necessário.
+
+---
+
+# 96. PRIVATE BUSINESS DATA
+
+Todos os dados do negócio devem ser privados.
+
+Não permitir que usuários não autenticados visualizem:
+
+* Products
+* Suppliers
+* Orders
+* Imports
+* Inventory
+* Sales
+* Financial data
+
+---
+
+# 97. USER MANAGEMENT
+
+Owner/Admin podem:
+
+* Invite users
+* Change roles
+* Disable users
+
+Member possui acesso limitado conforme permissões.
+
+---
+
+# 98. PERMISSIONS
+
+Estruturar permissões para futuramente controlar:
+
+* View financial
+* Edit products
+* Delete products
+* Manage suppliers
+* Manage orders
+* Manage imports
+* Manage inventory
+* Manage sales
+* Manage users
+
+---
+
+# 99. ACCESSIBILITY
+
+Implementar:
+
+* Keyboard navigation
+* Labels
+* Accessible buttons
+* Proper contrast
+* Focus states
+* Semantic HTML
+* Screen-reader friendly components
+
+---
+
+# 100. TIMEZONE
+
+Permitir configurar timezone.
+
+Default:
+
+```text
+America/New_York
+```
+
+As datas devem ser armazenadas corretamente e exibidas conforme timezone configurado.
+
+---
+
+# 101. INTERNATIONALIZATION
+
+Preparar arquitetura para suporte futuro a:
+
+* Portuguese
+* English
+
+A interface pode inicialmente estar em inglês, mas não deve ficar arquiteturalmente presa a apenas um idioma.
+
+---
+
+# 102. README — MARKETPLACE LIMITATIONS
+
+Documentar claramente que plataformas chinesas podem:
+
+* Bloquear requests
+* Exigir login
+* Alterar HTML
+* Alterar endpoints
+* Utilizar CAPTCHA
+* Bloquear scraping
+
+Quando isso ocorrer, o sistema deve:
+
+1. Detectar o erro
+2. Informar o usuário
+3. Não tentar bypass
+4. Permitir entrada manual
+
+---
+
+# 103. README — YUPOO LIMITATIONS
+
+Documentar que o Yupoo pode bloquear:
+
+* iframe
+* scraping
+* requests externos
+
+Se isso ocorrer, utilizar fallback legítimo.
+
+---
+
+# 104. README — CSSBUY
+
+Documentar explicitamente:
+
+> CSSBuy does not have an API integration configured for Urban Pair. CSSBuy order, warehouse, parcel, shipping and tracking information is entered manually.
+
+Não apresentar isso como uma falha do sistema.
+
+É uma decisão arquitetural devido à ausência de API disponível.
+
+---
+
+# 105. FUTURE INTEGRATIONS
+
+Deixar a arquitetura preparada para futuramente adicionar:
+
+* CSSBuy API, caso exista oficialmente
+* Outros agentes de compra
+* Outros marketplaces
+* Shopify
+* WooCommerce
+* Mercado Livre
+* Vinted
+* e-commerce próprio
+* Payment providers
+* Additional shipping providers
+
+Não implementar integrações fictícias agora.
+
+---
+
+# 106. DATABASE MIGRATIONS
+
+Criar migrations reais.
+
+Garantir que o projeto possa ser iniciado em uma instalação nova.
+
+Documentar:
+
+```text
+database setup
+migration
+seed
+development
+production
+```
+
+---
+
+# 107. ERROR LOGGING
+
+Criar logging adequado para:
+
+* API errors
+* External integration errors
+* Database errors
+* Authentication errors
+
+Não expor secrets nos logs.
+
+---
+
+# 108. API RATE LIMITS
+
+Respeitar limites das APIs externas.
+
+Implementar:
+
+* Caching
+* Debouncing
+* Rate limiting
+* Retry com backoff quando apropriado
+
+Não fazer requests repetidos desnecessariamente.
+
+---
+
+# 109. IMAGE HANDLING
+
+Produtos podem possuir múltiplas imagens.
+
+Permitir:
+
+* Main image
+* Gallery
+* Additional images
+
+Se possível, armazenar URLs públicas ao invés de duplicar arquivos desnecessariamente.
+
+Se uma imagem externa deixar de funcionar, o produto ainda deve existir normalmente.
+
+---
+
+# 110. PRODUCT URL NORMALIZATION
+
+Normalizar URLs antes de salvar quando possível.
+
+Detectar:
+
+* Tracking parameters
+* Platform
+* Product ID
+
+Não modificar URLs de forma que altere o produto original.
+
+Salvar também a URL original quando apropriado.
+
+---
+
+# 111. IMPORT PREVIEW
+
+Antes de salvar um produto importado:
+
+Mostrar:
+
+```text
+Platform detected
+Product title
+Images
+Price
+Currency
+Seller
+Product ID
+Variants
+Category
+```
+
+Campos encontrados automaticamente devem possuir indicação:
+
+```text
+Auto detected
+```
+
+Campos não encontrados:
+
+```text
+Manual input required
+```
+
+---
+
+# 112. DUPLICATE DETECTION
+
+Antes de criar um produto, verificar possíveis duplicados por:
+
+* Source URL
+* External Product ID
+* SKU
+
+Se houver possível duplicado:
+
+```text
+Possible duplicate product found.
+```
+
+Permitir:
+
+* Open existing
+* Continue anyway
+* Cancel
+
+---
+
+# 113. FINANCIAL CONSISTENCY
+
+Nunca calcular lucro utilizando somente:
+
+```text
+Selling Price - Purchase Price
+```
+
+quando houver custos adicionais registrados.
+
+Sempre considerar o custo apropriado.
+
+Exemplo:
+
+```text
+Product Cost
++ Shipping
++ Fees
++ Taxes
++ Packaging
++ Allocated Logistics
+=
+Actual Cost
+```
+
+---
+
+# 114. INVENTORY VALUATION
+
+Mostrar:
+
+```text
+Inventory Cost
+Inventory Potential Revenue
+Potential Profit
+```
+
+Separadamente.
+
+Não confundir valor de custo com valor de venda.
+
+---
+
+# 115. PROFIT TYPES
+
+Diferenciar:
+
+### Potential Profit
+
+Baseado no estoque ainda não vendido.
+
+### Realized Profit
+
+Baseado nas vendas concluídas.
+
+Não misturar os dois.
+
+---
+
+# 116. ANALYTICS DATA
+
+Analytics devem ser derivados dos dados reais.
+
+Se não houver dados:
+
+Mostrar:
+
+```text
+Not enough data yet.
+```
+
+Não criar gráficos falsos.
+
+---
+
+# 117. INITIAL STATE
+
+Após instalação:
+
+* Dashboard vazio
+* Nenhum produto falso
+* Nenhum fornecedor falso
+* Nenhuma venda falsa
+* Nenhuma importação falsa
+
+Mostrar onboarding/empty states.
+
+---
+
+# 118. ONBOARDING
+
+No primeiro acesso, mostrar uma configuração inicial simples:
+
+1. Business information
+2. Currency
+3. Timezone
+4. Add first supplier
+5. Add first product
+
+Permitir pular.
+
+---
+
+# 119. DEMO / DEVELOPMENT DATA
+
+Se for necessário utilizar seed data para desenvolvimento:
+
+* Colocar em script separado
+* Identificar claramente como demo
+* Não executar automaticamente em produção
+* Não misturar com dados reais
+
+---
+
+# 120. TESTING
+
+Criar testes para funções críticas:
+
+* Currency conversion
+* Landed cost
+* Profit
+* Margin
+* ROI
+* Break-even
+* Logistics allocation
+* Inventory movements
+
+Também testar:
+
+* Product creation
+* Sale creation
+* Import completion
+* Authentication
+
+---
+
+# 121. ACCEPTANCE CRITERIA
+
+O projeto será considerado funcional somente se:
+
+### Products
+
+* [ ] Criar produto
+* [ ] Editar produto
+* [ ] Excluir produto
+* [ ] Importar produto por URL
+* [ ] Detectar plataforma
+* [ ] Mostrar preview
+* [ ] Permitir fallback manual
+* [ ] Gerenciar variantes
+
+### Suppliers
+
+* [ ] Criar fornecedor
+* [ ] Editar fornecedor
+* [ ] Visualizar produtos
+* [ ] Adicionar catálogo Yupoo
+* [ ] Visualizar catálogo quando tecnicamente permitido
+* [ ] Abrir catálogo externamente quando embed for bloqueado
+* [ ] Importar produtos quando possível
+
+### Orders
+
+* [ ] Criar pedido
+* [ ] Adicionar produtos
+* [ ] Calcular total
+* [ ] Salvar CSSBuy Order ID manualmente
+
+### Imports
+
+* [ ] Criar importação
+* [ ] Adicionar custos
+* [ ] Calcular landed cost
+* [ ] Criar shipment
+* [ ] Acompanhar status
+
+### Logistics
+
+* [ ] Criar shipment
+* [ ] Adicionar tracking
+* [ ] Registrar peso
+* [ ] Registrar custo
+* [ ] Distribuir logística
+
+### Tracking
+
+* [ ] Tracking real quando provider disponível
+* [ ] Correios quando suportado
+* [ ] International tracking quando suportado
+* [ ] Manual fallback
+* [ ] Timeline
+
+### Currency
+
+* [ ] CNY
+* [ ] BRL
+* [ ] USD
+* [ ] Current rates
+* [ ] Historical rates
+* [ ] Historical purchase rate
+
+### Inventory
+
+* [ ] Entrada
+* [ ] Saída
+* [ ] Ajuste
+* [ ] Venda
+* [ ] Return
+* [ ] Damage
+* [ ] In transit
+
+### Sales
+
+* [ ] Criar venda
+* [ ] Reduzir estoque
+* [ ] Calcular revenue
+* [ ] Calcular realized profit
+
+### Financial
+
+* [ ] Revenue
+* [ ] Costs
+* [ ] Expenses
+* [ ] Profit
+* [ ] ROI
+* [ ] Margin
+
+### Dashboard
+
+* [ ] Real data
+* [ ] Charts
+* [ ] Filters
+* [ ] Alerts
+
+### Security
+
+* [ ] Authentication
+* [ ] Authorization
+* [ ] Private business data
+* [ ] Secrets protected
+
+---
+
+# 122. PRIORIDADE DE IMPLEMENTAÇÃO
+
+Não tente construir tudo superficialmente de uma vez.
+
+Implemente em fases, mantendo o projeto funcional ao final de cada fase.
+
+## FASE 1 — FOUNDATION
+
+* React
+* TypeScript
+* Tailwind
+* Backend
+* PostgreSQL
+* ORM
+* Authentication
+* Layout
+* Sidebar
+* Header
+* Dark mode
+* Settings
+
+## FASE 2 — PRODUCTS
+
+* Products CRUD
+* Categories
+* Variants
+* Product Source
+* URL detection
+* Marketplace providers
+* Import preview
+* Manual fallback
+
+## FASE 3 — SUPPLIERS
+
+* Supplier CRUD
+* Supplier profiles
+* Supplier catalogs
+* Yupoo provider
+* Catalog viewer
+* Catalog import
+
+## FASE 4 — ORDERS
+
+* Purchase Orders
+* Order Items
+* Costs
+* CSSBuy manual information
+
+## FASE 5 — IMPORTS & LOGISTICS
+
+* Imports
+* Shipments
+* Package contents
+* Landed cost
+* Logistics allocation
+
+## FASE 6 — TRACKING
+
+* Tracking providers
+* Correios
+* International tracking
+* Manual tracking
+* Tracking timeline
+
+## FASE 7 — INVENTORY
+
+* Inventory
+* Movements
+* In transit
+* Low stock
+
+## FASE 8 — SALES & FINANCE
+
+* Sales
+* Expenses
+* Revenue
+* Realized profit
+* Financial dashboard
+
+## FASE 9 — CURRENCY & ANALYTICS
+
+* CNY/BRL/USD
+* Historical rates
+* Analytics
+* Profit analysis
+* Scenario simulator
+
+## FASE 10 — POLISH
+
+* Performance
+* Accessibility
+* Error handling
+* Audit logs
+* Exports
+* Testing
+* Documentation
+
+---
+
+# 123. IMPORTANTE SOBRE O REPLIT
+
+O objetivo é ter uma aplicação que realmente rode no Replit.
+
+Não entregue apenas arquivos estáticos.
+
+Configure:
+
+* Development server
+* Database connection
+* Migrations
+* Environment variables
+* Production build
+* Proper routing
+* API server
+
+Certifique-se de que:
+
+```text
+npm install
+```
+
+e o processo de desenvolvimento funcionem corretamente.
+
+---
+
+# 124. FINAL REQUIREMENT
+
+Antes de considerar o projeto concluído, faça uma revisão completa procurando:
+
+* Código duplicado
+* Componentes duplicados
+* Lógica duplicada
+* Fórmulas inconsistentes
+* Rotas quebradas
+* Links quebrados
+* Imports quebrados
+* Erros TypeScript
+* Erros de build
+* Erros de banco
+* Problemas de responsividade
+* Problemas de autenticação
+* Dados fictícios
+* Secrets expostos
+* Integrações falsas
+
+Corrija todos os problemas encontrados.
+
+---
+
+# 125. REGRA FINAL
+
+Quero um **produto funcional**, não apenas uma demonstração visual.
+
+Priorize:
+
+1. Funcionalidade real
+2. Persistência de dados
+3. Segurança
+4. Cálculos corretos
+5. UX
+6. Arquitetura escalável
+7. Free tier
+8. Integrações legítimas
+9. Fallback manual
+10. Código organizado
+
+Quando uma integração externa não estiver disponível, o sistema deve continuar funcionando através de entrada manual.
+
+Quando uma plataforma chinesa permitir extração pública de informações, o sistema deve tentar preencher automaticamente o máximo possível.
+
+Quando uma plataforma bloquear o acesso, o sistema deve informar claramente e permitir continuar manualmente.
+
+**Não invente APIs, dados, preços, tracking, integrações ou resultados.**
+
+Construa o Urban Pair como um sistema interno de gestão empresarial real, preparado para crescer conforme a operação da empresa crescer.

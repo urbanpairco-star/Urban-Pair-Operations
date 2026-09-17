@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Urban Pair"
+description = "A private operations platform for Urban Pair to manage products, suppliers, imports, logistics, inventory, sales, and profitability in one place."
+version = "1.0.0"
+id = "artifacts/urban-pair"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24068
+
+[services.development]
+run = "pnpm --filter @workspace/urban-pair run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/urban-pair", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/urban-pair/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24068"
+BASE_PATH = "/"
